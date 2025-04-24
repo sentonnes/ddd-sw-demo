@@ -20,10 +20,6 @@ trigger:
       - 'fix*/*/main' # allow hotfix main branches
       - 'Fix*/*/main'
 
-variables:
-  - name: UbuntuPool
-    value: "ubuntu-pool"
-
 pool: $(UbuntuPool)
 
 resources:
@@ -39,6 +35,8 @@ extends:
   template: pipeline.yml@InfrastructurePipelineTemplate
   parameters:
     relativePathToTerraformFiles: ./deployment/terraform/service
+    PipelineVariableMappings:
+      UbuntuPool: "ubuntu-pool"
     tfStateResourceGroupName: root-infrastructure
     tfStateStorageAccountName: rootsa617a
     tfStateContainerName: tfstate
