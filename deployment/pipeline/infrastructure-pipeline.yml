@@ -34,7 +34,7 @@ resources:
 extends:
   template: pipeline.yml@InfrastructurePipelineTemplate
   parameters:
-    relativePathToTerraformFiles: ./deployment/terraform/service
+    relativePathToTerraformFiles: ./ddd-sw-demo/deployment/terraform/service
     PipelineVariableMappings:
       UbuntuPool: "ubuntu-pool"
     tfStateResourceGroupName: root-infrastructure
