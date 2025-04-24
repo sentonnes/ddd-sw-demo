@@ -38,7 +38,7 @@ resources:
 # pipeline config above can not be set in the template
 
 extends:
-  template: pipeline.yml@InfrastructurePipeline
+  template: pipeline.yml@InfrastructurePipelineTemplate
   parameters:
     relativePathToTerraformFiles: ../terraform/service
     tfStateResourceGroupName: root-infrastructure
