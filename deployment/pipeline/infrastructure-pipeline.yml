@@ -40,7 +40,7 @@ resources:
 extends:
   template: pipeline.yml@InfrastructurePipelineTemplate
   parameters:
-    relativePathToTerraformFiles: ../terraform/service
+    relativePathToTerraformFiles: ./deployment/terraform/service
     tfStateResourceGroupName: root-infrastructure
     tfStateStorageAccountName: rootsa617a
     tfStateContainerName: tfstate
