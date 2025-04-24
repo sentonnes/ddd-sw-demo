@@ -45,8 +45,6 @@ extends:
     tfStateStorageAccountName: rootsa617a
     tfStateContainerName: tfstate
     tfStateBlobName: tfstate.ddd-sw-app1
-    jobsVariableMappings:
-      app-name: ddd-sw-app1
     terraformVariableMappings:
       ARM_CLIENT_ID: $(TERRAFORM-CLIENT-ID)
       ARM_CLIENT_SECRET: $(TERRAFORM-CLIENT-SECRET)
