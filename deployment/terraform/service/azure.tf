@@ -6,7 +6,6 @@
     }
   }
 
-  required_version = "=1.9.6"
   backend "azurerm" {
     container_name = "tfstate"
   }
