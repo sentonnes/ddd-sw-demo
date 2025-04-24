@@ -1,0 +1,55 @@
+﻿name: $(BuildDefinitionName)_$(SourceBranchName)_$(Date:yy)$(DayOfYear).$(BuildCounter)
+
+pr:
+  autoCancel: true # indicates whether additional pushes to a PR should cancel in-progress runs for the same PR. Defaults to true
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - ../folder/files/*
+
+trigger:
+  branches:
+    include:
+      - main
+      - 'feat*/*/main' # allow feature main branches
+      - 'Feat*/*/main'
+      - 'bug*/*/main' # allow bugfix main branches
+      - 'Bug*/*/main'
+      - 'fix*/*/main' # allow hotfix main branches
+      - 'Fix*/*/main'
+
+variables:
+  - name: BuildCounter
+    value: $[counter(format('{0:yyyyMMdd}', pipeline.startTime), 1)]
+  - name: UbuntuPool
+    value: ""
+
+pool: $(UbuntuPool)
+
+resources:
+  repositories:
+    - repository: InfrastructurePipelineTemplate
+      type: github
+      endpoint: sentonnes
+      name: sentonnes/devops-infrastructure-pipeline-template
+
+# pipeline config above can not be set in the template
+
+extends:
+  template: pipeline.yml@InfrastructurePipeline
+  parameters:
+    relativePathToTerraformFiles: ../terraform/service
+    tfStateResourceGroupName: root-infrastructure
+    tfStateStorageAccountName: rootsa617a
+    tfStateContainerName: tfstate
+    tfStateBlobName: tfstate.ddd-sw-app1
+    jobsVariableMappings:
+      app-name:
+    terraformVariableMappings:
+      ARM_CLIENT_ID: $(TERRAFORM-CLIENT-ID)
+      ARM_CLIENT_SECRET: $(TERRAFORM-CLIENT-SECRET)
+      ARM_TENANT_ID: $(TERRAFORM-TENANT-ID)
+      ARM_SUBSCRIPTION_ID: $(TERRAFORM-SUBSCRIPTION-ID)
+      app-name: $(app-name)
