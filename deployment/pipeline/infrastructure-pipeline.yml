@@ -21,8 +21,6 @@ trigger:
       - 'Fix*/*/main'
 
 variables:
-  - name: BuildCounter
-    value: $[counter(format('{0:yyyyMMdd}', pipeline.startTime), 1)]
   - name: UbuntuPool
     value: "ubuntu-pool"
 
