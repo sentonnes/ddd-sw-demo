@@ -1,5 +1,5 @@
 ﻿locals {
-  service_name = "${var.app_name}_${var.environment}"
+  service_name = "${var.app_name}_${terraform.workspace}"
   app_settings = {
     "WEBSITE_RUN_FROM_PACKAGE" = "1"
   }
