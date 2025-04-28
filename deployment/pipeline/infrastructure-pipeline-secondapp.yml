@@ -1,0 +1,51 @@
+name: $(BuildDefinitionName)_$(SourceBranchName)_$(Date:yy)$(DayOfYear).$(BuildCounter)
+
+pr:
+  autoCancel: true # indicates whether additional pushes to a PR should cancel in-progress runs for the same PR. Defaults to true
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - ../terraform/service
+
+trigger:
+  branches:
+    include:
+      - main
+      - 'feat*/*/main' # allow feature main branches
+      - 'Feat*/*/main'
+      - 'bug*/*/main' # allow bugfix main branches
+      - 'Bug*/*/main'
+      - 'fix*/*/main' # allow hotfix main branches
+      - 'Fix*/*/main'
+
+pool: $(UbuntuPool)
+
+resources:
+  repositories:
+    - repository: InfrastructurePipelineTemplate
+      type: github
+      endpoint: sentonnes
+      name: sentonnes/devops-infrastructure-pipeline-template
+
+# pipeline config above can not be set in the template
+
+extends:
+  template: pipeline.yml@InfrastructurePipelineTemplate
+  parameters:
+    relativePathToTerraformFiles: ./deployment/terraform/service
+    PipelineVariableMappings:
+      UbuntuPool: "ubuntu-pool"
+    tfStateResourceGroupName: root-infrastructure
+    tfStateStorageAccountName: rootsa617a
+    tfStateContainerName: tfstate
+    tfStateBlobName: tfstate.comm-meeting
+    jobsVariableMappings:
+      group: TerraformSPVarGroup
+    terraformVariableMappings:
+      ARM_CLIENT_ID: $(TERRAFORM-CLIENT-ID)
+      ARM_CLIENT_SECRET: $(TERRAFORM-CLIENT-SECRET)
+      ARM_TENANT_ID: $(TERRAFORM-TENANT-ID)
+      ARM_SUBSCRIPTION_ID: $(TERRAFORM-SUBSCRIPTION-ID)
+      TF_VAR_app_name: "comm-meeting"
