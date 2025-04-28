@@ -1,0 +1,43 @@
+﻿name: $(BuildDefinitionName)_$(SourceBranchName)_$(Date:yy)$(DayOfYear).$(BuildCounter)
+
+pr:
+  autoCancel: true # indicates whether additional pushes to a PR should cancel in-progress runs for the same PR. Defaults to true
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - src
+
+trigger:
+  branches:
+    include:
+      - main
+      - 'feat*/*/main' # allow feature main branches
+      - 'Feat*/*/main'
+      - 'bug*/*/main' # allow bugfix main branches
+      - 'Bug*/*/main'
+      - 'fix*/*/main' # allow hotfix main branches
+      - 'Fix*/*/main'
+
+resources:
+  repositories:
+    - repository: WebServicePipeline
+      type: github
+      endpoint: sentonnes
+      name: sentonnes/devops-web-service-pipeline-template
+
+extends:
+  template: pipeline.yml@WebServicePipeline
+  parameters:
+    BuildStageVariableMappings:
+      ServiceName: comm-meeting 
+      CsprojPaths: "/src/app1.csproj"
+      ProjectFolderPath: "src"
+    HasUnitTests: false
+    DeployStageVariableMappings:
+      AzDOEnvironment: [ENV]
+      azureSubscriptionServiceConnection: PipelineSP 
+      WebAppResourceName: comm-meeting-[ENV]-webapp
+      WebAppResourceGroupName: comm-meeting-[ENV]-rg
+      HealthCheckUrl: "https://comm-meeting-[ENV]-webapp.azurewebsites.net/health"
