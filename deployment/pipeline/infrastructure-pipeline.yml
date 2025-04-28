@@ -7,7 +7,7 @@ pr:
       - '*'
   paths:
     include:
-      - ../terraform/service
+      - deployment/terraform/service
 
 trigger:
   branches:
