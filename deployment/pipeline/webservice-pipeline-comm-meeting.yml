@@ -36,8 +36,8 @@ extends:
       ProjectFolderPath: "src"
     HasUnitTests: false
     DeployStageVariableMappings:
-      AzDOEnvironment: [ENV]
-      azureSubscriptionServiceConnection: PipelineSP 
-      WebAppResourceName: comm-meeting-[ENV]-webapp
-      WebAppResourceGroupName: comm-meeting-[ENV]-rg
+      AzDOEnvironment: "[ENV]"
+      azureSubscriptionServiceConnection: "PipelineSP"
+      WebAppResourceName: "comm-meeting-[ENV]-webapp"
+      WebAppResourceGroupName: "comm-meeting-[ENV]-rg"
       HealthCheckUrl: "https://comm-meeting-[ENV]-webapp.azurewebsites.net/health"
