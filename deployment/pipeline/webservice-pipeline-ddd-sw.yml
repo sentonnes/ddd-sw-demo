@@ -20,6 +20,8 @@ trigger:
       - 'fix*/*/main' # allow hotfix main branches
       - 'Fix*/*/main'
 
+pool: $(UbuntuPool)
+
 resources:
   repositories:
     - repository: WebServicePipeline
@@ -31,7 +33,7 @@ extends:
   template: pipeline.yml@WebServicePipeline
   parameters:
     BuildStageVariableMappings:
-      ServiceName: dddapp1
+      ServiceName: "dddapp1"
       CsprojPaths: "/src/app1.csproj"
       ProjectFolderPath: "src"
     HasUnitTests: false
