@@ -30,7 +30,7 @@ resource "azurerm_linux_web_app" "webapp" {
 }
 
 resource "azurerm_linux_web_app_slot" "slot" {
-  name           = "${local.service_name}-staging"
+  name           = "staging"
   app_service_id = azurerm_linux_web_app.webapp.id
 
   site_config {
